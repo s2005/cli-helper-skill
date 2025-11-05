@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.10] - 2025-11-05
+
+### Fixed
+- Fixed skill name validation error by changing name from 'CLI Helper' to 'cli-helper' (lowercase with hyphens only)
+
+## [0.0.9] - 2024-11-05
+
 ### Added
 - Initial skill setup with three-level organization system
 - SKILL.md with comprehensive workflow for parsing CLI help
