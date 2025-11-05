@@ -1,98 +1,85 @@
-# Guides
+# CLI Helper Skill Guides
 
-This directory contains additional documentation and guides for your skill.
+This directory is reserved for additional documentation and guides specific to the CLI Helper skill.
 
 ## Purpose
 
-Guides provide detailed information beyond the basic SKILL.md file:
+Guides can provide:
+- Extended examples of organizing specific CLI tools
+- Advanced techniques for categorizing complex options
+- Tips for working with different types of CLI tools
+- Troubleshooting common parsing challenges
 
-- Reference documentation
-- Advanced usage guides
-- Platform-specific instructions
-- Troubleshooting guides
+## Potential Guides
 
-## Suggested Guides
+### Tool-Specific Guides
 
-### Platform-Specific Guides
+For commonly-requested CLI tools that benefit from detailed guidance:
 
-If your skill has platform-specific behavior:
+- `ffmpeg-guide.md` - Organizing ffmpeg's extensive options
+- `kubectl-guide.md` - Kubernetes CLI tool reference
+- `docker-guide.md` - Docker CLI command organization
 
-- `windows-guide.md` - Windows-specific commands and paths
-- `unix-guide.md` - Unix/Mac-specific commands and paths
-- `linux-guide.md` - Linux-specific instructions
+### Technique Guides
 
-### Reference Guides
+- `parsing-strategies.md` - Strategies for parsing different help output formats
+- `categorization-tips.md` - Tips for deciding between Basic/Medium/Advanced levels
+- `dealing-with-manpages.md` - How to work with man page output vs --help
 
-- `api-reference.md` - API or command reference
-- `configuration.md` - Configuration options
-- `troubleshooting.md` - Common issues and solutions
+## Current Status
 
-### Usage Guides
+This directory is currently empty but reserved for future guides as the skill evolves and common use cases emerge.
 
-- `getting-started.md` - Beginner's guide
-- `advanced-usage.md` - Advanced techniques
-- `best-practices.md` - Recommended approaches
+## Contributing Guides
 
-## Referencing Guides
+If you create guides for specific CLI tools or techniques:
 
-Link to guides from your SKILL.md:
-
-```markdown
-## Platform-Specific Instructions
-
-For detailed platform-specific commands:
-- Windows: See `docs/guides/windows-guide.md`
-- Unix/Mac: See `docs/guides/unix-guide.md`
-
-## Advanced Usage
-
-See `docs/guides/advanced-usage.md` for:
-- Advanced configuration
-- Complex workflows
-- Performance optimization
-```
-
-## Best Practices
-
-1. **Keep guides focused** - One topic per guide
-2. **Use clear headings** - Make content scannable
-3. **Provide examples** - Show, don't just tell
-4. **Keep updated** - Maintain as skill evolves
-5. **Cross-link** - Reference related guides
-
-## Adding Guides
-
-When adding a new guide:
-
-1. Create markdown file with clear name
-2. Add table of contents for long guides
-3. Include examples and code snippets
-4. Reference from SKILL.md
-5. Update this README
-6. Test all commands/examples
+1. Follow the three-level organization system (Basic, Medium, Advanced)
+2. Include concrete examples from real help output
+3. Keep each guide focused on a single tool or technique
+4. Reference the guide from SKILL.md if it becomes essential
+5. Ensure guides stay under 500 lines (max 1000)
 
 ## Guide Template
 
+When creating a new guide:
+
 ```markdown
-# Guide Title
+# [Tool Name] CLI Guide
 
-Brief description of what this guide covers.
+Brief description of the tool and why it benefits from this guide.
 
-## Prerequisites
+## Tool Overview
 
-- Requirement 1
-- Requirement 2
+- What the tool does
+- Why organizing its options is valuable
+- Common use cases
 
-## Section 1
+## Basic Options
 
-Content with examples
+List and explain basic options with examples.
 
-## Section 2
+## Medium Options (Commonly Used)
 
-More content
+List and explain medium options with usage scenarios.
+
+## Advanced Options
+
+List advanced options with concrete usage examples.
+
+## Common Workflows
+
+Show how to combine options for typical tasks.
 
 ## Related Resources
 
-- Link to related guide
-- Link to external resource
+- Official documentation links
+- Related tools or guides
 ```
+
+## Notes
+
+- Guides are optional but can be valuable for complex CLI tools
+- Focus on tools that users frequently ask about
+- Keep content practical and example-driven
+- Update guides as tools evolve

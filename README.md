@@ -1,518 +1,253 @@
-# Claude Code Skill Template
+# CLI Helper Skill
 
-A template repository for creating custom Claude Code skills with best practices, documentation structure, and automated release workflows.
+A Claude Code skill that helps you understand and work with command-line tools by organizing their help documentation into three structured levels of complexity.
 
-## Prerequisites
+## Overview
 
-**IMPORTANT:** Before using this template, it's highly recommended to use Anthropic's official **skill-creator** skill from the `example-skills` plugin. The skill-creator provides:
+The CLI Helper Skill provides systematic guidance for working with command-line interface (CLI) tools by parsing and organizing their help documentation. It's particularly valuable for:
 
-- Guided skill creation process with concrete examples
-- Automated skill initialization with `init_skill.py` script
-- Validation and packaging tools
-- Best practices for skill structure and organization
+- **Proprietary or custom internal CLI tools** that aren't widely documented
+- **Complex tools** with extensive options that are difficult to navigate
+- **Rare or specialized CLI utilities** where parameter knowledge is limited
+- **Any situation** where accurate CLI parameter information is critical
 
-### Installing the skill-creator skill
+The skill organizes CLI help information into three levels of complexity (Basic, Medium, Advanced), making it easier to find the right options for any task.
 
-1. Ensure you have the `example-skills` plugin installed (official Anthropic plugin)
-2. The skill-creator skill is available as `example-skills:skill-creator`
-3. Use it by asking: "Help me create a new skill using the skill-creator"
+## Features
 
-### Why use skill-creator first?
+- **Three-level organization system**: Categorizes CLI options by usage frequency and complexity
+- **Systematic help parsing**: Extracts and structures information from `--help` output
+- **Reference library**: Build a collection of pre-parsed CLI documentation for frequently-used tools
+- **Smart categorization**: Automatically suggests appropriate complexity levels based on option characteristics
+- **Example generation**: Creates concrete usage examples for advanced options
 
-The skill-creator skill will:
+## Installation
 
-- Help you understand your skill requirements through concrete examples
-- Generate a properly structured skill directory automatically
-- Guide you through the creation process step-by-step
-- Validate and package your skill when ready
+### Using Claude Code
 
-This template repository serves as:
-
-- A **backup/alternative** approach for manual skill creation
-- A **reference** for skill structure and GitHub automation
-- A **starting point** if you prefer manual setup over guided creation
-
-## Quick Start
-
-### 1. Use This Template
-
-Click the "Use this template" button on GitHub to create a new repository from this template.
-
-Or clone manually:
+Copy the skill to your Claude Code skills directory:
 
 ```bash
-git clone https://github.com/s2005/claude-code-skill-template.git your-skill-name
-cd your-skill-name
-```
-
-### 2. Customize Your Skill
-
-Replace placeholders in the following files:
-
-#### SKILL.md (Required)
-
-- [ ] Update `name:` in frontmatter
-- [ ] Update `description:` in frontmatter (this is how Claude recognizes your skill!)
-- [ ] Replace all placeholder text with your skill's content
-- [ ] Remove sections you don't need
-- [ ] Add sections specific to your skill
-
-#### README.md (This File)
-
-- [ ] Replace title with your skill name
-- [ ] Update description and features
-- [ ] Update installation instructions
-- [ ] Update usage examples
-- [ ] Update repository URLs
-
-#### VERSION
-
-- [ ] Set initial version (recommend `0.0.1` for development)
-
-#### LICENSE
-
-- [ ] Update year and author name
-- [ ] Or choose a different license if preferred
-
-### 3. Add Your Implementation
-
-Depending on your skill type:
-
-#### For Python-based skills
-
-```bash
-# Add your Python scripts to scripts/
-scripts/
-  └── your_script.py
-```
-
-#### For documentation-based skills
-
-```bash
-# Add guides to docs/guides/
-docs/guides/
-  └── your-guide.md
-```
-
-#### For tool-based skills
-
-```bash
-# Add tool configurations or wrappers
-# Update SKILL.md with tool usage
-```
-
-### 4. Update Documentation
-
-#### docs/tasks/release/how-to-release.md
-
-- [ ] Update skill name throughout
-- [ ] Update repository URLs
-- [ ] Adjust release steps if needed
-
-#### docs/tasks/tests/how-to-test-skill.md
-
-- [ ] Create test cases specific to your skill
-- [ ] Update expected outputs
-- [ ] Add skill-specific troubleshooting
-
-### 5. Test Locally
-
-```bash
-# Copy skill to Claude Code skills directory
-# Windows
-cp -r . "$USERPROFILE/.claude/skills/your-skill-name"
+# Windows (Git Bash)
+cp -r cli-helper-skill "$USERPROFILE/.claude/skills/cli-helper"
 
 # Unix/Mac
-cp -r . ~/.claude/skills/your-skill-name
-
-# Test with Claude Code
-# Ask questions that should trigger your skill
+cp -r cli-helper-skill ~/.claude/skills/cli-helper
 ```
 
-See `docs/tasks/tests/how-to-test-skill.md` for comprehensive testing guide.
+### From GitHub Release
 
-### 6. Initialize Git and Push
+1. Download the latest release ZIP from [Releases](https://github.com/s2005/cli-helper-skill/releases)
+2. Extract to your Claude skills directory:
 
 ```bash
-# Initialize git (if not using template)
-git init
-git branch -m main
+# Windows
+unzip cli-helper-skill-v1.0.0.zip -d "$USERPROFILE/.claude/skills/"
 
-# Configure git user
-git config --local user.name "your-username"
-git config --local user.email "your-email@users.noreply.github.com"
+# Unix/Mac
+unzip cli-helper-skill-v1.0.0.zip -d ~/.claude/skills/
+```
 
-# Commit initial version
-git add .
-git commit -m "Initial commit: [Your Skill Name]"
+3. Restart Claude Code
 
-# Create GitHub repository
-gh repo create your-skill-name --public --source=. --description="Your skill description"
+## Usage
 
-# Push to GitHub
-git push -u origin main
+### Basic Usage
+
+Simply ask Claude about a CLI tool:
+
+```
+"What options are available for ffmpeg?"
+"How do I use the dataproc command?"
+"Show me the parameters for kubectl get"
+```
+
+Claude will automatically:
+1. Check for existing reference documentation
+2. Execute the tool's help command if needed
+3. Parse and organize the options into three levels
+4. Present the structured information
+
+### Three Complexity Levels
+
+**Level 1: Basic** - Essential options for common tasks
+- Help, version, basic operations
+- Simple flags with clear purposes
+- Minimal dependencies on other options
+
+**Level 2: Medium (Commonly Used)** - Options for typical workflows
+- Configuration and customization options
+- Formatting and filtering
+- Regular but not universal usage
+
+**Level 3: Advanced** - Specialized options for complex scenarios
+- Performance tuning parameters
+- Advanced filtering and transformations
+- Edge cases and specialized features
+- Always includes concrete usage examples
+
+### Creating Reference Files
+
+For frequently-used tools, you can create reference files:
+
+1. Ask Claude to parse a tool's help output
+2. Request to save it: "Save this to references/ for future use"
+3. Claude will create a structured markdown file in `references/`
+
+You can also manually create reference files following the template in `references/template.md`.
+
+### Working with Proprietary Tools
+
+For internal or proprietary tools:
+
+1. Ensure the tool is accessible in your environment
+2. Ask Claude about the tool (it will execute `--help`)
+3. Optionally save the parsed output to `references/` for faster future access
+
+## Examples
+
+### Example 1: Quick lookup
+
+```
+User: "What are the basic options for grep?"
+
+Claude: # grep - Search for patterns in files
+
+## Basic Options
+- `-h, --help` - Display help information
+- `--version` - Show version number
+- `-i, --ignore-case` - Case insensitive matching
+- `-r, --recursive` - Search directories recursively
+- `-n, --line-number` - Show line numbers
+
+## Medium Options (Commonly Used)
+[continues with organized output...]
+```
+
+### Example 2: Creating a reference
+
+```
+User: "Parse the help for our internal 'dataproc' tool and save it to references"
+
+Claude: [Executes dataproc --help, parses output, creates references/dataproc.md]
+
+I've created references/dataproc.md with organized documentation for the dataproc tool.
+The file includes:
+- 8 basic options for common operations
+- 12 medium-level options for typical workflows
+- 10 advanced options with performance tuning
+- Usage examples for complex scenarios
+```
+
+### Example 3: Finding the right option
+
+```
+User: "I need to process a large file with dataproc. What options should I use?"
+
+Claude: For large file processing with dataproc, I recommend these options:
+
+**From Medium level:**
+- `--chunk-size SIZE` - Process in chunks to manage memory
+- `--log-level info` - Monitor progress
+
+**From Advanced level:**
+- `--parallel NUM` - Enable parallel processing
+  Example: `dataproc -i large.csv --parallel 8 --chunk-size 100M -o output.csv`
+- `--memory-limit SIZE` - Prevent out-of-memory errors
+  Example: `dataproc -i large.csv --memory-limit 4G --chunk-size 50M`
+
+[provides additional context and recommendations]
 ```
 
 ## Repository Structure
 
-```text
-claude-code-skill-template/
-├── .github/
-│   └── workflows/
-│       └── release-skill.yml       # Automated release workflow
-├── docs/
-│   ├── guides/                     # Additional documentation
-│   └── tasks/
-│       ├── release/
-│       │   └── how-to-release.md   # Release instructions
-│       └── tests/
-│           └── how-to-test-skill.md # Testing guide
-├── scripts/                        # Executable code (Python/Bash/etc.)
-│   └── example_script.py           # Example script - customize or delete
-├── references/                     # Documentation for context loading
-│   └── example_reference.md        # Example reference - customize or delete
-├── assets/                         # Files used in output (templates, images, etc.)
-│   └── example_asset.txt           # Example asset - customize or delete
-├── examples/                       # Example files/usage (optional)
-├── .gitignore                      # Git ignore file
-├── LICENSE                         # MIT License
-├── README.md                       # This file
-├── SKILL.md                        # Main skill file (REQUIRED)
-├── SETUP.md                        # Detailed setup guide
-└── VERSION                         # Version tracking
+```
+cli-helper-skill/
+├── SKILL.md                    # Main skill file with instructions
+├── VERSION                     # Version number (0.0.1)
+├── README.md                   # This file
+├── references/                 # Pre-parsed CLI documentation
+│   ├── template.md             # Template for creating new references
+│   └── example-tool.md         # Example reference (fictional DataProc tool)
+├── scripts/                    # (Currently empty - no scripts needed)
+├── assets/                     # (Currently empty - no assets needed)
+├── examples/                   # Example usage scenarios
+│   └── README.md
+└── docs/
+    ├── tasks/
+    │   ├── release/
+    │   │   └── how-to-release.md
+    │   └── tests/
+    │       └── how-to-test-skill.md
+    └── guides/
+        └── README.md
 ```
 
-**Note:** Following skill-creator best practices:
+## How It Works
 
-- **scripts/** - For deterministic, reusable code
-- **references/** - For documentation loaded into context
-- **assets/** - For files used in output (not loaded into context)
+1. **Check for existing references**: The skill first searches `references/` for pre-parsed documentation
+2. **Execute help command**: If no reference exists, executes the tool's help command (`--help`, `-h`, `help`, or `man`)
+3. **Parse and categorize**: Analyzes the output and organizes options into three complexity levels based on:
+   - Usage frequency indicators in help text
+   - Complexity (number of parameters, dependencies)
+   - Purpose keywords (debug, advanced, experimental, etc.)
+4. **Present structured information**: Displays the organized options with descriptions and examples
+5. **Optional reference creation**: Can save parsed documentation for future use
 
-## What's Included
+## Contributing Reference Files
 
-### Core Files
+You can contribute reference files for common tools:
 
-- **SKILL.md** - Main skill configuration with YAML frontmatter
-  - Claude reads this to understand when to use your skill
-  - Must have `name` and `description` in frontmatter
-  - Contains instructions, examples, and workflows
-
-- **VERSION** - Simple version tracking
-  - Used by GitHub Actions for releases
-  - Update when ready to release
-
-- **.gitignore** - Standard ignores for Python, IDE, OS files
-
-- **LICENSE** - MIT License (customize if needed)
-
-### Documentation Templates
-
-- **README.md** - This file, customize for your skill
-- **docs/tasks/release/how-to-release.md** - Complete release guide
-- **docs/tasks/tests/how-to-test-skill.md** - Testing framework
-- **docs/guides/** - Additional guides (optional)
-
-### Automation
-
-- **.github/workflows/release-skill.yml** - GitHub Actions workflow
-  - Automatically builds skill package on release
-  - Creates zip file for distribution
-  - Validates skill structure
-  - Attaches to GitHub release
-
-### Bundled Resources (Following skill-creator Best Practices)
-
-- **scripts/** - Executable code (Python/Bash/etc.) for deterministic, reusable operations
-  - Include when the same code is repeatedly rewritten
-  - Scripts can be executed without loading into context
-
-- **references/** - Documentation loaded into context as needed
-  - Include for schemas, API docs, domain knowledge, policies
-  - Keeps SKILL.md lean while providing detailed information
-  - For files >10k words, include grep patterns in SKILL.md
-
-- **assets/** - Files used in output, not loaded into context
-  - Include templates, images, boilerplate, fonts
-  - These files are copied/modified in the final output
-
-- **examples/** - Example files or usage scenarios (optional)
-- **docs/guides/** - Additional documentation (optional)
-
-## Customization Guide
-
-### 1. Skill Name and Description
-
-The `description` field in SKILL.md frontmatter is crucial:
-
-```yaml
----
-name: my-awesome-skill
-description: This skill should be used when the user asks about [X], needs to [Y], or mentions [Z]. Use when queries involve [key terms].
----
-```
-
-**Tips:**
-
-- Be specific about when to use the skill
-- Include trigger words users might say
-- Mention file types, actions, or topics
-- Keep it concise but descriptive
-
-### 2. Adding Bundled Resources
-
-Follow skill-creator best practices for organizing resources:
-
-#### Adding Scripts (`scripts/`)
-
-Use when code is repeatedly rewritten or needs deterministic reliability:
-
-1. Add script to `scripts/` directory
-2. Make it executable: `chmod +x scripts/your_script.py`
-3. Document usage in SKILL.md
-4. Test locally
-
-Example:
-
-```python
-#!/usr/bin/env python3
-"""
-Your script description
-"""
-
-def main():
-    # Your logic here
-    pass
-
-if __name__ == '__main__':
-    main()
-```
-
-#### Adding References (`references/`)
-
-Use for documentation that should be loaded into context:
-
-1. Add markdown file to `references/` directory
-2. Include schemas, API docs, domain knowledge, policies
-3. Reference in SKILL.md with brief description
-4. Keep SKILL.md lean by moving detailed info here
-
-Example:
-
-```markdown
-# Database Schema Reference
-
-## users table
-- id (PRIMARY KEY)
-- username (VARCHAR)
-...
-```
-
-#### Adding Assets (`assets/`)
-
-Use for files used in output (not loaded into context):
-
-1. Add template/image/boilerplate to `assets/` directory
-2. Document in SKILL.md how to use the asset
-3. Claude will copy/modify these in the final output
-
-Example assets:
-
-- Templates: `assets/template.html`
-- Images: `assets/logo.png`
-- Boilerplate: `assets/frontend-template/`
-
-### 3. Platform-Specific Instructions
-
-If your skill needs platform-specific commands (like plugin-manager):
-
-1. Create `docs/guides/windows-guide.md`
-2. Create `docs/guides/unix-guide.md`
-3. Reference them in SKILL.md:
-
-   ```markdown
-   ## Platform-Specific Instructions
-   - Windows: See `docs/guides/windows-guide.md`
-   - Unix/Mac: See `docs/guides/unix-guide.md`
-   ```
-
-### 4. Updating GitHub Actions
-
-Edit `.github/workflows/release-skill.yml`:
-
-- Change `{skill-name}` placeholders to your skill name
-- Update skill structure validation if needed
-- Customize release notes template
-
-## Release Process
-
-When ready to release:
-
-1. Update VERSION file (e.g., `1.0.0`)
-2. Commit and push
-3. Create GitHub release: `gh release create v1.0.0 --generate-notes`
-4. GitHub Actions automatically builds and attaches skill zip
-
-See `docs/tasks/release/how-to-release.md` for detailed instructions.
-
-## Testing
-
-Manual testing framework included in `docs/tasks/tests/how-to-test-skill.md`:
-
-1. Install skill locally
-2. Run test scenarios
-3. Verify activation
-4. Document results
+1. Use the template in `references/template.md`
+2. Follow the three-level organization system
+3. Include concrete examples for advanced options
+4. Submit a pull request
 
 ## Best Practices
 
-Based on Anthropic's skill-creator best practices:
+### When Creating References
 
-### Skill Description
+- **Be objective**: Base categorization on typical usage patterns
+- **Provide context**: Explain what options do and when to use them
+- **Include examples**: Advanced options should always have concrete examples
+- **Note interactions**: Mention when options work together or conflict
+- **Warn about dangers**: Clearly mark destructive operations
 
-- Be specific about when to use the skill
-- Include trigger words users might say
-- Use third-person form: "This skill should be used when..."
-- Test that Claude activates the skill correctly
+### Markdown File Size
 
-### Skill Content
+Keep reference files under 1000 lines (preferably under 500):
+- Split very large tools into multiple reference files if needed
+- Focus on most commonly-used options
+- Link to official documentation for exhaustive details
 
-- **Writing style:** Use imperative/infinitive form (verb-first instructions) throughout
-  - Good: "Run the script to process files"
-  - Bad: "You should run the script" or "You can run the script"
-- Keep SKILL.md focused and concise
-- Move detailed documentation to `references/` files
-- Use clear, actionable instructions
-- Provide real examples, not hypothetical ones
-- Break complex tasks into steps
+## Limitations
 
-### Bundled Resources
+- Requires the CLI tool to be installed and accessible
+- Help text formats vary widely; some tools may need manual interpretation
+- Some proprietary tools may have limited or poorly formatted help output
+- Man pages provide more detail but may not always be available
 
-- **scripts/** - For code that's repeatedly rewritten or needs deterministic behavior
-- **references/** - For documentation that should be loaded into context
-- **assets/** - For files used in output (templates, images, boilerplate)
-- Delete example files you don't need
-- Avoid duplicating content between SKILL.md and reference files
+## Version History
 
-### Testing Practices
-
-- Test incrementally after each change
-- Use real user scenarios
-- Verify skill activates when expected
-- Test on multiple platforms if applicable
-- Use skill-creator's `package_skill.py` for validation
-
-### Documentation
-
-- Keep README clear and practical
-- Provide complete setup instructions
-- Document common errors and solutions
-- Include troubleshooting guide
-- Reference bundled resources clearly
-
-### Version Control
-
-- Use semantic versioning (MAJOR.MINOR.PATCH)
-- Start with 0.0.1 for initial development
-- Release 1.0.0 when stable
-- Document changes in releases
-
-### Progressive Disclosure
-
-- Metadata (name + description) - Always in context (~100 words)
-- SKILL.md body - Loaded when skill triggers (<5k words)
-- Bundled resources - Loaded as needed by Claude
-
-## Examples of Skills
-
-Different types of skills you can create:
-
-### 1. Tool Wrapper Skill
-
-Helps Claude use a specific CLI tool (e.g., jq, docker, kubectl)
-
-### 2. Workflow Skill
-
-Guides Claude through multi-step processes (e.g., testing, deployment)
-
-### 3. Documentation Skill
-
-Provides reference information (e.g., API docs, coding standards)
-
-### 4. File Processing Skill
-
-Handles specific file formats (e.g., CSV processing, markdown linting)
-
-### 5. Integration Skill
-
-Connects to external services (within Claude Code's constraints)
-
-## Troubleshooting
-
-### Skill Doesn't Activate
-
-1. Check SKILL.md has valid YAML frontmatter
-2. Ensure description field is clear and specific
-3. Verify skill is in correct directory
-4. Try being more explicit: "Use [skill-name] to..."
-5. Restart Claude Code
-
-### Scripts Don't Execute
-
-1. Check Python/tool is installed
-2. Verify script has correct permissions
-3. Test script manually first
-4. Check file paths (use forward slashes)
-
-### Release Workflow Fails
-
-1. Check VERSION file exists
-2. Verify SKILL.md structure
-3. Check GitHub Actions logs
-4. Ensure all required files present
-
-## Resources
-
-### Official Anthropic Resources
-
-- **[skill-creator Skill](https://github.com/anthropics/example-skills)** - Use this first! Official skill creation tool
-- [Claude Code Skills Documentation](https://docs.claude.com/en/docs/claude-code/skills)
-- [How to Create Custom Skills](https://support.claude.com/en/articles/12512198-how-to-create-custom-skills)
-- [Skill Authoring Best Practices](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/best-practices)
-- [Example Skills Repository](https://github.com/anthropics/skills)
-
-### skill-creator Advantages
-
-The skill-creator skill provides:
-
-- `init_skill.py` - Automated skill directory generation
-- `package_skill.py` - Validation and packaging automation
-- Guided workflow from requirements to deployment
-- Built-in best practices enforcement
-
-## Contributing
-
-If you have improvements to this template:
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
+See [CHANGELOG.md](CHANGELOG.md) for version history and release notes.
 
 ## License
 
-MIT License - See LICENSE file
+MIT License - See [LICENSE](LICENSE) file
 
 ## Support
 
-For issues with this template:
-
-- [GitHub Issues](https://github.com/s2005/claude-code-skill-template/issues)
-- [GitHub Discussions](https://github.com/s2005/claude-code-skill-template/discussions)
+- **Issues**: [GitHub Issues](https://github.com/s2005/cli-helper-skill/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/s2005/cli-helper-skill/discussions)
+- **Documentation**: See SKILL.md for detailed usage instructions
 
 ## Acknowledgments
 
-This template is based on best practices from:
-
+This skill follows best practices from:
 - Claude Code official documentation
-- Community skill examples
-- Real-world skill development experience
+- Anthropic's skill-creator guidelines
+- Community feedback on CLI tool documentation
+
+---
+
+**Quick Start**: Copy this skill to `~/.claude/skills/cli-helper` and ask Claude "What options does [your-cli-tool] support?"
