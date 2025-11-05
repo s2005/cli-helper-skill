@@ -1,5 +1,5 @@
 ---
-name: CLI Helper
+name: cli-helper
 description: Use this skill when the user asks about CLI tool options, parameters, or flags. Activate when queries mention command-line tools, --help output, CLI documentation, or organizing tool parameters into levels. Helps parse and structure CLI help documentation into Basic, Medium, and Advanced complexity levels.
 ---
 
