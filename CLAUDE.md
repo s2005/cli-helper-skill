@@ -54,10 +54,10 @@ Install skill to Claude Code skills directory:
 
 ```bash
 # Windows (Git Bash)
-cp -r . "$USERPROFILE/.claude/skills/your-skill-name"
+cp -r . "$USERPROFILE/.claude/skills/cli-helper"
 
 # Unix/Mac
-cp -r . ~/.claude/skills/your-skill-name
+cp -r . ~/.claude/skills/cli-helper
 ```
 
 Test activation by asking Claude questions that match the skill description.
