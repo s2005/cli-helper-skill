@@ -142,7 +142,7 @@ Create test cases specific to your skill. Here's a template:
 
    ```yaml
    ---
-   name: your-skill-name
+   name: CLI Helper
    description: [Your description]
    ---
    ```

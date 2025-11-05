@@ -17,7 +17,7 @@ Update the VERSION file with the new release version:
 
 ```bash
 # Navigate to repository
-cd /path/to/your-skill-name
+cd /path/to/cli-helper-skill
 
 # Update version (example: 1.0.0)
 echo "1.0.0" > VERSION
