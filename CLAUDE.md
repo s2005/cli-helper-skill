@@ -4,7 +4,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is a template repository for creating custom Claude Code skills. It provides a structured framework for building skills that extend Claude Code's capabilities with specialized knowledge, workflows, or tool integrations.
+This is the **CLI Helper Skill** - a Claude Code skill that helps users understand and work with command-line tools by organizing their help documentation into three structured levels of complexity (Basic, Medium, Advanced).
+
+### Purpose
+
+The CLI Helper Skill is particularly valuable for:
+- Proprietary or custom internal CLI tools not widely documented
+- Complex tools with extensive options
+- Rare or specialized CLI utilities where parameter knowledge is limited
+- Situations where accurate CLI parameter information is critical
 
 ## Core Architecture
 
@@ -83,33 +91,47 @@ See `docs/tasks/release/how-to-release.md` for detailed instructions.
 
 ## Important Files
 
-- **SKILL.md** - Main skill file with YAML frontmatter (name, description)
-- **VERSION** - Single version number for releases (e.g., `0.0.1`)
+- **SKILL.md** - Main skill file with three-level organization system
+- **VERSION** - Current version (0.0.5)
 - **README.md** - User-facing documentation and installation instructions
-- **SETUP.md** - Step-by-step setup guide for customizing the template
+- **references/template.md** - Template for creating new CLI tool references
+- **references/example-tool.md** - Example reference (fictional DataProc tool)
 - **.markdownlint-cli2.jsonc** - Markdown linter config (MD013 disabled)
 - **docs/tasks/release/how-to-release.md** - Release workflow documentation
 - **docs/tasks/tests/how-to-test-skill.md** - Testing framework and test cases
 
 ## Skill Development Best Practices
 
-### SKILL.md Description Field
+### Three-Level Organization System
 
-The description field determines when Claude activates the skill. Make it:
+When working with CLI tools, options must be categorized into three levels:
 
-- Specific about trigger words users might say
-- Clear about scenarios when to use the skill
-- Include file types, actions, or topics relevant to the skill
-- Use third-person form: "This skill should be used when..."
+**Level 1: Basic**
+- Essential options for most common tasks
+- Help, version, basic operations
+- Simple flags with clear, single purposes
+- Examples: `--help`, `--version`, `--output FILE`
 
-Example:
+**Level 2: Medium (Commonly Used)**
+- Options used in typical workflows
+- Configuration, formatting, filtering options
+- Used regularly but not universally
+- Examples: `--format FORMAT`, `--verbose`, `--config FILE`
 
-```yaml
----
-name: docker-helper
-description: This skill should be used when the user asks about Docker containers, needs to run docker commands, or wants to manage Docker images and containers. Use when queries mention docker, containerization, or container management.
----
-```
+**Level 3: Advanced (Complex Cases)**
+- Specialized options for complex scenarios
+- Performance tuning, debugging, edge cases
+- Often require multiple parameters or complex syntax
+- MUST include concrete usage examples
+- Examples: `--parallel NUM`, `--memory-limit SIZE`, `--custom-function`
+
+### Categorization Criteria
+
+Organize options based on:
+1. **Usage frequency indicators**: "common", "basic" keywords in help text
+2. **Complexity**: Number of parameters, dependencies on other options
+3. **Purpose keywords**: "debug", "advanced", "experimental" → Level 3
+4. **Common sense**: What typical users need first vs. what specialists need
 
 ### Writing Style
 
@@ -173,30 +195,44 @@ Create specific test cases for each skill feature with expected inputs/outputs.
 
 ## Common Workflows
 
-### Creating a New Skill from Template
+### Adding New CLI Tool References
 
-1. Update SKILL.md frontmatter (name and description)
-2. Customize SKILL.md content (purpose, usage, prerequisites)
-3. Add implementation (scripts, references, or assets)
-4. Update README.md with skill-specific information
-5. Update VERSION file (start with `0.0.1`)
-6. Test locally by installing to Claude skills directory
-7. Initialize git and push to GitHub
-8. Create release when ready
+When creating new reference files in `references/`:
 
-See `SETUP.md` for complete step-by-step instructions.
+1. Use `template.md` as the starting point
+2. Follow the three-level structure strictly
+3. Include concrete examples for ALL Advanced options
+4. Keep files under 500 lines (max 1000 lines)
+5. Use clear, scannable headings
+6. Note option interactions and warnings
 
-### Validation Before Release
+### Updating Documentation
 
-Required checks:
+When updating README.md or other docs:
+- Keep focus on the three-level organization system
+- Emphasize the skill's value for proprietary/complex tools
+- Maintain consistency with SKILL.md content
+- Avoid duplicating content between files
 
-- SKILL.md has valid YAML frontmatter with `name` and `description`
-- VERSION file exists with semantic version number
-- README.md is customized (no template placeholders)
-- Skill installs correctly to `~/.claude/skills/`
-- Claude activates skill when expected
-- All documented commands/scripts work
-- Documentation matches actual behavior
+### Testing the CLI Helper Skill
+
+When testing the skill:
+
+1. **Activation test**: Verify skill activates with queries like:
+   - "What options does grep support?"
+   - "Parse the help for ffmpeg"
+   - "Show me kubectl parameters"
+
+2. **Categorization test**: Ensure options are logically organized:
+   - Basic options are truly essential
+   - Medium options represent typical usage
+   - Advanced options have concrete examples
+
+3. **Reference quality test**: Check that references:
+   - Follow the template structure
+   - Include all required sections
+   - Have clear, actionable examples
+   - Stay under line limits
 
 ## Troubleshooting
 
@@ -217,11 +253,12 @@ Common issues:
 
 Check workflow logs: `gh run view --log`
 
-### Scripts Don't Execute
+### Reference File Quality Issues
 
-1. Verify scripts are executable: `chmod +x scripts/*.py`
-2. Check required tools installed: `which python`, `which jq`, etc.
-3. Test script manually: `python scripts/example_script.py`
+1. Check that Advanced options have concrete examples
+2. Verify options are categorized appropriately
+3. Ensure files stay under 500 lines (max 1000)
+4. Test that reference follows template.md structure
 
 ## Documentation Structure
 
@@ -247,8 +284,33 @@ Follow semantic versioning (MAJOR.MINOR.PATCH):
 - `1.1.1` - Bug fix
 - `2.0.0` - Breaking change
 
+## Skill Activation
+
+The skill activates when users ask about:
+- CLI tool options or parameters
+- Command line help or flags
+- How to use specific CLI commands
+- Available options for a tool
+
+Trigger phrases:
+- "What options does [tool] have?"
+- "Parse the help for [tool]"
+- "Show me parameters for [command]"
+- "How do I use [cli-tool]?"
+
+## Common Pitfalls to Avoid
+
+1. **Over-categorization**: Not every CLI tool needs Advanced section
+2. **Missing examples**: Advanced options MUST have concrete examples
+3. **Vague descriptions**: Each option should explain WHEN to use it, not just WHAT it does
+4. **Copying help text verbatim**: Parse and organize, don't just copy
+5. **Ignoring file size**: Keep references under 500 lines
+
 ## References
 
 - [Claude Code Skills Documentation](https://docs.claude.com/en/docs/claude-code/skills)
 - [Skill Authoring Best Practices](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/best-practices)
-- [skill-creator Skill](https://github.com/anthropics/example-skills) - Official skill creation tool
+
+---
+
+**Quick Reference**: This skill helps organize CLI tool documentation into Basic, Medium, and Advanced levels. Focus on practical categorization and concrete examples.
